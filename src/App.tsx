@@ -1,5 +1,5 @@
 import React, {useState } from 'react';
-import { registerIcons } from '@fluentui/react';
+import {  } from '@fluentui/react';
 import { HomeScreen } from './HomeScreen';
 import { CallScreen } from './CallScreen';
 import {Stack, PrimaryButton} from '@fluentui/react';
