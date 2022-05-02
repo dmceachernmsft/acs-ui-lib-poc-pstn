@@ -11,7 +11,7 @@ This repo is to demonstrate how to use PSTN calling with the [ACS React UI libra
     - ```yarn start```
 
 ## Instructions on how to start a call
-Once you have the application running you will be greeted with this screen
+Once you have the application running you will be greeted with this screen on `localhost:3000`
 
 ![Screenshot of the home page](./images/homePage.png)
 
