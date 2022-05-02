@@ -25,11 +25,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         setStatefulCallClient(createStatefulCallClient({
             userId: { communicationUserId: userId }
         }));
-    },)
+    },[])
 
     useEffect(() => {
         if (callAgent === undefined && statefulCallClient) {
+            
             const createUserAgent = async () => {
+                console.log('Creating CallAgent');
                 setCallAgent(await statefulCallClient.createCallAgent(tokenCredential))
             }
             createUserAgent();
@@ -38,10 +40,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
     useEffect(() => {
         if (callAgent !== undefined) {
-            setCall(callAgent.startCall([{ phoneNumber: calleeNumber }], { alternateCallerId: { phoneNumber: callerNumber } }));
+            const call = callAgent.startCall([{ phoneNumber: calleeNumber }], { alternateCallerId: { phoneNumber: callerNumber } })
+            setCall(call);
             console.log(`CallId ${call?.id}`);
         }
-    }, [callAgent])
+    }, [callAgent, calleeNumber, callerNumber])
 
     return (
         <>
