@@ -6,10 +6,9 @@ This repo is to demonstrate how to use PSTN calling with the ACS React UI librar
 
 - Clone the repository
 - run the following:
-
-```npm install yarn```
-```yarn install```
-```yarn start```
+    - ```npm install yarn```
+    - ```yarn install```
+    - ```yarn start```
 
 ## Instructions on how to start a call
 Once you have the application running you will be greeted with this screen
