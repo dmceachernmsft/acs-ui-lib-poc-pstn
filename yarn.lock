@@ -26,7 +26,33 @@
   dependencies:
     tslib "^2.0.0"
 
-"@azure/communication-common@1.1.0":
+"@azure/communication-calling@^1.4.4":
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/@azure/communication-calling/-/communication-calling-1.4.4.tgz#c5515b0d9797dc6984247c6cd7a58ffa8befb160"
+  integrity sha512-uWzULqnXB7pMIEH8x1mwwT45ncPfAryfoKxd4BtbcL1C3ckMknk/5gP3Ov2/V5DJkoOO3I6A4D1n05eSFRy+zA==
+  dependencies:
+    "@azure/communication-common" "^1.0.0"
+    "@azure/logger" "^1.0.2"
+
+"@azure/communication-chat@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@azure/communication-chat/-/communication-chat-1.2.0.tgz#d25ff3a4cfd7c35d3eec7a869dd8d2935b8dd145"
+  integrity sha512-cgwD+yZubVHohstA/Ik456W7293fYNlhScjEMc0HoMmi+WRIHcW0KddpnY5KJhI4+6BgozOhtMOj0e1tGWyqqA==
+  dependencies:
+    "@azure/abort-controller" "^1.0.0"
+    "@azure/communication-common" "^2.0.0"
+    "@azure/communication-signaling" "1.0.0-beta.13"
+    "@azure/core-auth" "^1.3.0"
+    "@azure/core-client" "^1.3.0"
+    "@azure/core-paging" "^1.1.1"
+    "@azure/core-rest-pipeline" "^1.3.0"
+    "@azure/core-tracing" "1.0.0-preview.13"
+    "@azure/logger" "^1.0.0"
+    events "^3.0.0"
+    tslib "^2.2.0"
+    uuid "^8.3.0"
+
+"@azure/communication-common@1.1.0", "@azure/communication-common@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@azure/communication-common/-/communication-common-1.1.0.tgz#35cbff6577486e35faafe80963a2dbaf57faa423"
   integrity sha512-vqTtzDtb4NG3LWoWoqlOOJApZRRIIImNUKlGyTa6c1YC+v5A7UEOL9TX8NRDxvFVUF2wDHsSnkhLBVBgkcAhIQ==
@@ -37,6 +63,19 @@
     "@azure/core-tracing" "1.0.0-preview.13"
     events "^3.0.0"
     jwt-decode "~2.2.0"
+    tslib "^2.2.0"
+
+"@azure/communication-common@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@azure/communication-common/-/communication-common-2.0.0.tgz#c7a6614d70a7106f6108becebeeb6923650a1638"
+  integrity sha512-pUIdW5WISR9OvBGvOmBijB62GzuQGNl1+f/L55jdh+el3NRC3q4qcntYF9fGEbX7X3hJ2xiEWnkRiAdT52CJqg==
+  dependencies:
+    "@azure/abort-controller" "^1.0.0"
+    "@azure/core-auth" "^1.3.0"
+    "@azure/core-rest-pipeline" "^1.3.2"
+    "@azure/core-tracing" "1.0.0-preview.13"
+    events "^3.0.0"
+    jwt-decode "^3.1.2"
     tslib "^2.2.0"
 
 "@azure/communication-react@^1.2.0":
@@ -77,6 +116,17 @@
     events "^3.0.0"
     tslib "^1.10.0"
 
+"@azure/communication-signaling@1.0.0-beta.13":
+  version "1.0.0-beta.13"
+  resolved "https://registry.yarnpkg.com/@azure/communication-signaling/-/communication-signaling-1.0.0-beta.13.tgz#873761df98ab1f59787a704fa341819029e58416"
+  integrity sha512-WNB3kewT2unIMVSzN/NkVf0EiPvXJh31pbsfatykU/Z6jfTsnKb0fDW7LhujeLnDIJfhAE0IC1xpW1msGYfsmg==
+  dependencies:
+    "@azure/core-http" "^2.0.0"
+    "@azure/core-tracing" "1.0.0-preview.13"
+    "@azure/logger" "~1.0.0"
+    events "^3.0.0"
+    tslib "^1.10.0"
+
 "@azure/core-asynciterator-polyfill@^1.0.0":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@azure/core-asynciterator-polyfill/-/core-asynciterator-polyfill-1.0.2.tgz#0dd3849fb8d97f062a39db0e5cadc9ffaf861fec"
@@ -88,6 +138,19 @@
   integrity sha512-7CU6DmCHIZp5ZPiZ9r3J17lTKMmYsm/zGvNkjArQwPkrLlZ1TZ+EUYfGgh2X31OLMVAQCTJZW4cXHJi02EbJnA==
   dependencies:
     "@azure/abort-controller" "^1.0.0"
+    tslib "^2.2.0"
+
+"@azure/core-client@^1.3.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@azure/core-client/-/core-client-1.5.0.tgz#7aabb87d20e08db3683a117191c844bc19adb74e"
+  integrity sha512-YNk8i9LT6YcFdFO+RRU0E4Ef+A8Y5lhXo6lz61rwbG8Uo7kSqh0YqK04OexiilM43xd6n3Y9yBhLnb1NFNI9dA==
+  dependencies:
+    "@azure/abort-controller" "^1.0.0"
+    "@azure/core-asynciterator-polyfill" "^1.0.0"
+    "@azure/core-auth" "^1.3.0"
+    "@azure/core-rest-pipeline" "^1.5.0"
+    "@azure/core-tracing" "1.0.0-preview.13"
+    "@azure/logger" "^1.0.0"
     tslib "^2.2.0"
 
 "@azure/core-http@1.2.4":
@@ -132,12 +195,35 @@
     uuid "^8.3.0"
     xml2js "^0.4.19"
 
+"@azure/core-paging@^1.1.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@azure/core-paging/-/core-paging-1.2.1.tgz#1b884f563b6e49971e9a922da3c7a20931867b54"
+  integrity sha512-UtH5iMlYsvg+nQYIl4UHlvvSrsBjOlRF4fs0j7mxd3rWdAStrKYrh2durOpHs5C9yZbVhsVDaisoyaf/lL1EVA==
+  dependencies:
+    "@azure/core-asynciterator-polyfill" "^1.0.0"
+    tslib "^2.2.0"
+
 "@azure/core-paging@~1.1.3":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@azure/core-paging/-/core-paging-1.1.3.tgz#3587c9898a0530cacb64bab216d7318468aa5efc"
   integrity sha512-his7Ah40ThEYORSpIAwuh6B8wkGwO/zG7gqVtmSE4WAJ46e36zUDXTKReUCLBDc6HmjjApQQxxcRFy5FruG79A==
   dependencies:
     "@azure/core-asynciterator-polyfill" "^1.0.0"
+
+"@azure/core-rest-pipeline@^1.3.0", "@azure/core-rest-pipeline@^1.3.2", "@azure/core-rest-pipeline@^1.5.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@azure/core-rest-pipeline/-/core-rest-pipeline-1.8.0.tgz#ba73b45fc4bf7e625af2d79a92857c06b35f45e2"
+  integrity sha512-o8eZr96erQpiq8EZhZU/SyN6ncOfZ6bexwN2nMm9WpDmZGvaq907kopADt8XvNhbEF7kRA1l901Pg8mXjWp3UQ==
+  dependencies:
+    "@azure/abort-controller" "^1.0.0"
+    "@azure/core-auth" "^1.3.0"
+    "@azure/core-tracing" "1.0.0-preview.13"
+    "@azure/logger" "^1.0.0"
+    form-data "^4.0.0"
+    http-proxy-agent "^4.0.1"
+    https-proxy-agent "^5.0.0"
+    tslib "^2.2.0"
+    uuid "^8.3.0"
 
 "@azure/core-tracing@1.0.0-preview.11":
   version "1.0.0-preview.11"
@@ -156,7 +242,7 @@
     "@opentelemetry/api" "^1.0.1"
     tslib "^2.2.0"
 
-"@azure/logger@1.0.3", "@azure/logger@^1.0.0", "@azure/logger@~1.0.0":
+"@azure/logger@1.0.3", "@azure/logger@^1.0.0", "@azure/logger@^1.0.2", "@azure/logger@~1.0.0":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@azure/logger/-/logger-1.0.3.tgz#6e36704aa51be7d4a1bae24731ea580836293c96"
   integrity sha512-aK4s3Xxjrx3daZr3VylxejK3vG5ExXck5WOHDJ8in/k9AqlfIyFMMT1uG7u8mNjX+QRILTIn0/Xgschfh/dQ9g==
@@ -6366,6 +6452,11 @@ jsonpointer@^5.0.0:
   dependencies:
     array-includes "^3.1.4"
     object.assign "^4.1.2"
+
+jwt-decode@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-3.1.2.tgz#3fb319f3675a2df0c2895c8f5e9fa4b67b04ed59"
+  integrity sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
 
 jwt-decode@~2.2.0:
   version "2.2.0"
