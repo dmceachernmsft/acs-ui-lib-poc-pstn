@@ -1,65 +1,56 @@
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import {
-  FluentThemeProvider,
-  DEFAULT_COMPONENT_ICONS,
-  CallClientProvider,
-  CallAgentProvider,
-  CallProvider,
-  createStatefulCallClient,
-  StatefulCallClient
-} from '@azure/communication-react';
-import React, { useEffect, useState } from 'react';
-import CallingComponents from './CallingComponents';
+import React, {useState } from 'react';
 import { registerIcons } from '@fluentui/react';
-import { Call, CallAgent } from '@azure/communication-calling';
+import { HomeScreen } from './HomeScreen';
+import { CallScreen } from './CallScreen';
+import {Stack, PrimaryButton} from '@fluentui/react';
+
+type AppPages = 'home' | 'call';
 
 function App(): JSX.Element {
-  const userAccessToken = '<Azure Communication Services Resource Access Token>';
-  const userId = '<User Id associated to the token>';
-  const groupId = '<Generated GUID groupd id>';
-  const displayName = '<Display Name>';
+  const [page, setPage] = useState<AppPages>('home');
+  const [callerNumber, setCallerNumber] = useState<string>();
+  const [calleeNumber, setCalleeNumber] = useState<string>();
+  const [token, setToken] = useState<string>();
+  const [userId, setUserId] = useState<string>();
 
-  registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
-
-  const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
-  const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>()
-  const [callAgent, setCallAgent] = useState<CallAgent>()
-  const [call, setCall] = useState<Call>()
-
-  useEffect(() => {
-    setStatefulCallClient(createStatefulCallClient({
-      userId: { communicationUserId: userId }
-    }));
-  }, [])
-
-  useEffect(() => {
-    if (callAgent === undefined && statefulCallClient) {
-      const createUserAgent = async () => {
-        setCallAgent(await statefulCallClient.createCallAgent(tokenCredential, { displayName: displayName }))
+  switch (page) {
+    case 'home': {
+      document.title = 'ACS UI Library PSTN POC';
+      return (
+        <HomeScreen
+          startCallHandler={(callDetails) => {
+            setCallerNumber(callDetails.callerNumber);
+            setCalleeNumber(callDetails.calleeNumber);
+            setToken(callDetails.userToken);
+            setUserId(callDetails.userId);
+            setPage('call');
+          }}
+        />
+      )
+    }
+    case 'call': {
+      document.title = 'ACS UI Library PSTN Call Screen';
+      if (token && calleeNumber && callerNumber && userId) {
+        return (
+          <CallScreen userToken={token} userId={userId} calleeNumber={calleeNumber} callerNumber={callerNumber} />
+        )
+      } else {
+        return (
+          <Stack>
+            <Stack>There was a Problem with your credentials please try again</Stack>
+            <PrimaryButton text='Return to home page' onClick={() => {
+              setPage('home');
+            }}></PrimaryButton>
+          </Stack>
+        )
       }
-      createUserAgent();
     }
-  }, [statefulCallClient, tokenCredential])
-
-  useEffect(() => {
-    if (callAgent != undefined) {
-      setCall(callAgent.join({ groupId }))
+    default: {
+      document.title = 'Invalid Page';
+      return (<>Invalid Page</>);
     }
-  }, [callAgent])
+  }
 
-  return (
-    <>
-      <FluentThemeProvider>
-        {statefulCallClient && <CallClientProvider callClient={statefulCallClient}>
-          {callAgent && <CallAgentProvider callAgent={callAgent}>
-            {call && <CallProvider call={call}>
-              <CallingComponents />
-            </CallProvider>}
-          </CallAgentProvider>}
-        </CallClientProvider>}
-      </FluentThemeProvider>
-    </>
-  );
 }
 
 export default App;
