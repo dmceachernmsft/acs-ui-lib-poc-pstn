@@ -1,4 +1,4 @@
-import { Stack, Text, TextField, PrimaryButton, IStackStyles, IStyle } from '@fluentui/react';
+import { Stack, Text, TextField, PrimaryButton, IStackStyles } from '@fluentui/react';
 import { useState } from 'react';
 
 export type HomeScreenProps = {
