@@ -17,9 +17,9 @@ export interface CallScreenProps {
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
     const { userToken, userId, calleeNumber, callerNumber } = props;
     const tokenCredential = new AzureCommunicationTokenCredential(userToken);
-    const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>()
-    const [callAgent, setCallAgent] = useState<CallAgent>()
-    const [call, setCall] = useState<Call>()
+    const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
+    const [callAgent, setCallAgent] = useState<CallAgent>();
+    const [call, setCall] = useState<Call>();
 
     registerIcons({ icons: { ...DEFAULT_COMPONENT_ICONS, CirclePauseIcon: <CirclePauseIcon />, CirclePauseSolidIcon: <CirclePauseSolidIcon /> } });
 
