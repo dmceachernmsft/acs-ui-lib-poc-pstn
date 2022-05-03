@@ -17,7 +17,7 @@ Once you have the application running you will be greeted with this screen on `l
 
 you will need 4 things: 
 - An [ACS requisitioned phone number](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number?pivots=platform-azp)
-- An [ACS token](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity) from the same ACS resource as the phone number
+- An [ACS token](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity) from the same ACS resource as the phone number with VOIP credentials.
 - The `userIdentifier` that goes with the token
 - The number that you would like to call
 
