@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import CallingComponents from './CallingComponents';
 import { registerIcons } from '@fluentui/react';
 import { Call, CallAgent } from '@azure/communication-calling';
+import { CirclePauseIcon, CirclePauseSolidIcon } from '@fluentui/react-icons-mdl2'
+
 
 export interface CallScreenProps {
     userToken: string,
@@ -19,17 +21,17 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     const [callAgent, setCallAgent] = useState<CallAgent>()
     const [call, setCall] = useState<Call>()
 
-    registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
+    registerIcons({ icons: { ...DEFAULT_COMPONENT_ICONS, CirclePauseIcon: <CirclePauseIcon />, CirclePauseSolidIcon: <CirclePauseSolidIcon /> } });
 
     useEffect(() => {
         setStatefulCallClient(createStatefulCallClient({
             userId: { communicationUserId: userId }
         }));
-    },[])
+    }, [])
 
     useEffect(() => {
         if (callAgent === undefined && statefulCallClient) {
-            
+
             const createUserAgent = async () => {
                 console.log('Creating CallAgent');
                 setCallAgent(await statefulCallClient.createCallAgent(tokenCredential))
@@ -46,13 +48,28 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         }
     }, [callAgent, calleeNumber, callerNumber])
 
+    /**
+     * Something like this should be in the handlers like how screen share and end call buttons are. 
+     * Callable through usePropsFor(HoldButton).
+     * @returns Call back to hold the call
+     */
+    const onToggleHold = async (): Promise<void> => {
+        if (call?.state === 'LocalHold') {
+            console.log('resuming call');
+            return await call?.resume();
+        } else {
+            console.log('holding call');
+            return await call?.hold();
+        }
+    }
+
     return (
         <>
             <FluentThemeProvider>
                 {statefulCallClient && <CallClientProvider callClient={statefulCallClient}>
                     {callAgent && <CallAgentProvider callAgent={callAgent}>
                         {call && <CallProvider call={call}>
-                            <CallingComponents />
+                            <CallingComponents onToggleHold={onToggleHold} />
                         </CallProvider>}
                     </CallAgentProvider>}
                 </CallClientProvider>}

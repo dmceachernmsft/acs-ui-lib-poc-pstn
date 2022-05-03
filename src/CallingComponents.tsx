@@ -1,8 +1,13 @@
-import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton } from '@azure/communication-react';
+import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCall } from '@azure/communication-react';
 import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
+import { HoldButton } from './Components/HoldButton';
 
-function CallingComponents(): JSX.Element {
+export type CallingComponentsProps = {
+  onToggleHold: () => Promise<void>;
+}
+
+function CallingComponents(props: CallingComponentsProps): JSX.Element {
 
   const videoGalleryProps = usePropsFor(VideoGallery);
   const cameraProps = usePropsFor(CameraButton);
@@ -18,9 +23,10 @@ function CallingComponents(): JSX.Element {
   }, [endCallProps.onHangUp]);
 
   if (callEnded) {
-    return <CallEnded />;
+    return (
+    <CallEnded />);
   }
-
+  
   return (
     <Stack className={mergeStyles({ height: '100%' })}>
       <div style={{ width: '100vw', height: '100vh' }}>
@@ -31,6 +37,7 @@ function CallingComponents(): JSX.Element {
         {cameraProps && <CameraButton  {...cameraProps} />}
         {microphoneProps && <MicrophoneButton   {...microphoneProps} />}
         {screenShareProps && <ScreenShareButton  {...screenShareProps} />}
+        {props.onToggleHold && <HoldButton checked={false} onToggleHold={props.onToggleHold} />}
         {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
       </ControlBar>
     </Stack>
