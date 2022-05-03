@@ -1,10 +1,10 @@
-import { Call } from '@azure/communication-calling';
-import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton } from '@azure/communication-react';
+import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCall } from '@azure/communication-react';
 import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
+import { HoldButton } from './Components/HoldButton';
 
 export type CallingComponentsProps = {
-  call: Call;
+  onToggleHold: () => Promise<void>;
 }
 
 function CallingComponents(props: CallingComponentsProps): JSX.Element {
@@ -37,6 +37,7 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
         {cameraProps && <CameraButton  {...cameraProps} />}
         {microphoneProps && <MicrophoneButton   {...microphoneProps} />}
         {screenShareProps && <ScreenShareButton  {...screenShareProps} />}
+        {props.onToggleHold && <HoldButton checked={false} onToggleHold={props.onToggleHold} />}
         {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
       </ControlBar>
     </Stack>

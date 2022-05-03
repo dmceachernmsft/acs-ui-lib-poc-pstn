@@ -1,19 +1,23 @@
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStrings } from "@azure/communication-react";
-import { Icon } from '@fluentui/react';
+import { CirclePauseSolidIcon } from '@fluentui/react-icons-mdl2'
 
 export interface HoldButtonProps extends ControlBarButtonProps {
-    onHold?: () => Promise<void>;
+    // these should come from usePropsFor like the end call button
+    onToggleHold: () => Promise<void>;
 }
 const holdButtonStrings: ControlBarButtonStrings = {
     label: 'hold',
     tooltipContent: 'Hold Call'
 }
 
-const onRenderHoldIcon = (): JSX.Element => <Icon iconName=""></Icon>
-
 export const HoldButton = (props: HoldButtonProps): JSX.Element => {
+
+const onRenderStopHoldIcon = (): JSX.Element => <CirclePauseSolidIcon />;
+
     return (<ControlBarButton
+        {...props}
         strings={holdButtonStrings}
-        onRenderIcon={onRenderHoldIcon}
+        onClick={props.onToggleHold ?? props.onClick}
+        onRenderIcon={onRenderStopHoldIcon}
     />);
 }
