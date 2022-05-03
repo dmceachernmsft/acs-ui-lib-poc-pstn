@@ -45,14 +45,14 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             console.log(`CallId ${call?.id}`);
         }
     }, [callAgent, calleeNumber, callerNumber])
-
+    
     return (
         <>
             <FluentThemeProvider>
                 {statefulCallClient && <CallClientProvider callClient={statefulCallClient}>
                     {callAgent && <CallAgentProvider callAgent={callAgent}>
                         {call && <CallProvider call={call}>
-                            <CallingComponents />
+                            <CallingComponents call={call}/>
                         </CallProvider>}
                     </CallAgentProvider>}
                 </CallClientProvider>}
