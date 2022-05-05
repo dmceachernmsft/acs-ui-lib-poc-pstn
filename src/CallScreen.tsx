@@ -48,6 +48,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         }
     }, [callAgent, calleeNumber, callerNumber])
 
+    console.log(call?.state);
+
     /**
      * Something like this should be in the handlers like how screen share and end call buttons are. 
      * Callable through usePropsFor(HoldButton).
@@ -55,10 +57,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
      */
     const onToggleHold = async (): Promise<void> => {
         if (call?.state === 'LocalHold') {
-            console.log('resuming call');
             return await call?.resume();
         } else {
-            console.log('holding call');
             return await call?.hold();
         }
     }
@@ -69,7 +69,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
                 {statefulCallClient && <CallClientProvider callClient={statefulCallClient}>
                     {callAgent && <CallAgentProvider callAgent={callAgent}>
                         {call && <CallProvider call={call}>
-                            <CallingComponents onToggleHold={onToggleHold} />
+                            <CallingComponents callId={call.id} onToggleHold={onToggleHold} />
                         </CallProvider>}
                     </CallAgentProvider>}
                 </CallClientProvider>}

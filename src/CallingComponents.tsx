@@ -1,10 +1,12 @@
-import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCall } from '@azure/communication-react';
+import { CallState } from '@azure/communication-calling';
+import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCall, StatefulCallClient, useCallClient } from '@azure/communication-react';
 import { mergeStyles, Stack } from '@fluentui/react';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { HoldButton } from './Components/HoldButton';
 
 export type CallingComponentsProps = {
   onToggleHold: () => Promise<void>;
+  callId: string;
 }
 
 function CallingComponents(props: CallingComponentsProps): JSX.Element {
@@ -14,30 +16,63 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
   const microphoneProps = usePropsFor(MicrophoneButton);
   const screenShareProps = usePropsFor(ScreenShareButton);
   const endCallProps = usePropsFor(EndCallButton);
+  const callClient = useCallClient();
+  const callState = callClient.getState();
 
   const [callEnded, setCallEnded] = useState(false);
+  const [callOnHold, setCallOnHold] = useState(false);
 
   const onHangup = useCallback(async (): Promise<void> => {
     await endCallProps.onHangUp();
     setCallEnded(true);
   }, [endCallProps.onHangUp]);
 
+  const onToggleHold = useCallback(async (): Promise<void> => {
+    await props.onToggleHold();
+  }, [props.onToggleHold])
+
+  useEffect(() => {
+    if (callState.calls[props.callId].state === ("LocalHold" || "RemoteHold")) {
+      setCallOnHold(true);
+    } else {
+      setCallOnHold(false);
+    }
+  }, [callState.calls, props.callId]);
+
   if (callEnded) {
     return (
-    <CallEnded />);
+      <CallEnded />);
   }
-  
+
+  if (callState.calls[props.callId].state === "Connecting") {
+    return (
+      <h1>Performing setup</h1>
+    )
+  }
+
+  if (callState.calls[props.callId].state === "Ringing") {
+    return (
+      <Stack>
+        <CallRinging />
+        <ControlBar layout='floatingBottom'>
+          {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
+        </ControlBar>
+      </Stack>
+    );
+  }
+
   return (
     <Stack className={mergeStyles({ height: '100%' })}>
       <div style={{ width: '100vw', height: '100vh' }}>
-        {videoGalleryProps && <VideoGallery {...videoGalleryProps} />}
+        {videoGalleryProps && !callOnHold && <VideoGallery {...videoGalleryProps} />}
+        {callOnHold && <CallHold />}
       </div>
 
       <ControlBar layout='floatingBottom'>
         {cameraProps && <CameraButton  {...cameraProps} />}
         {microphoneProps && <MicrophoneButton   {...microphoneProps} />}
         {screenShareProps && <ScreenShareButton  {...screenShareProps} />}
-        {props.onToggleHold && <HoldButton checked={false} onToggleHold={props.onToggleHold} />}
+        {onToggleHold && <HoldButton onToggleHold={onToggleHold} />}
         {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
       </ControlBar>
     </Stack>
@@ -46,6 +81,14 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
 
 function CallEnded(): JSX.Element {
   return <h1>You ended the call.</h1>;
+}
+
+function CallHold(): JSX.Element {
+  return <h1>The Call is on hold.</h1>;
+}
+
+function CallRinging(): JSX.Element {
+  return <h1>Ringing</h1>
 }
 
 export default CallingComponents;
