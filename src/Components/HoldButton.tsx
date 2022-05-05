@@ -12,7 +12,7 @@ const holdButtonStrings: ControlBarButtonStrings = {
 
 export const HoldButton = (props: HoldButtonProps): JSX.Element => {
 
-const onRenderStopHoldIcon = (): JSX.Element => <CirclePauseSolidIcon />;
+    const onRenderStopHoldIcon = (): JSX.Element => <CirclePauseSolidIcon />;
 
     return (<ControlBarButton
         {...props}
