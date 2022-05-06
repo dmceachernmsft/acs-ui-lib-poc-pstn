@@ -20,7 +20,7 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
 
   const [callEnded, setCallEnded] = useState(false);
   const [callOnHold, setCallOnHold] = useState(false);
-
+  
   const onHangup = useCallback(async (): Promise<void> => {
     await endCallProps.onHangUp();
     setCallEnded(true);
