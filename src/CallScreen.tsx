@@ -53,6 +53,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     /**
      * Something like this should be in the handlers like how screen share and end call buttons are. 
      * Callable through usePropsFor(HoldButton).
+     * We would want 2 new handlers onHold() and onResume() in CreateHandlers.ts
      * @returns Call back to hold the call
      */
     const onToggleHold = async (): Promise<void> => {
