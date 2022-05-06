@@ -1,10 +1,13 @@
 import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCallClient } from '@azure/communication-react';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { useCallback, useEffect, useState } from 'react';
+import { AddParticipantField } from './Components/AddParticipantField';
 import { HoldButton } from './Components/HoldButton';
 
 export type CallingComponentsProps = {
   onToggleHold: () => Promise<void>;
+  onAddParticipant: (participant: string, caller: string) => Promise<void>;
+  caller: string;
   callId: string;
 }
 
@@ -20,7 +23,7 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
 
   const [callEnded, setCallEnded] = useState(false);
   const [callOnHold, setCallOnHold] = useState(false);
-  
+
   const onHangup = useCallback(async (): Promise<void> => {
     await endCallProps.onHangUp();
     setCallEnded(true);
@@ -37,6 +40,8 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
       setCallOnHold(false);
     }
   }, [callState.calls, props.callId]);
+
+  // console.log(callState.calls[props.callId].callerInfo);
 
   if (callEnded) {
     return (
@@ -65,8 +70,10 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
       <div style={{ width: '100vw', height: '100vh' }}>
         {videoGalleryProps && !callOnHold && <VideoGallery {...videoGalleryProps} />}
         {callOnHold && <CallHold />}
+        <Stack style={{ width: '12rem', marginLeft: 'auto', marginRight: 'auto' }}>
+          <AddParticipantField onAddParticipant={props.onAddParticipant} caller={props.caller}></AddParticipantField>
+        </Stack>
       </div>
-
       <ControlBar layout='floatingBottom'>
         {cameraProps && <CameraButton  {...cameraProps} />}
         {microphoneProps && <MicrophoneButton   {...microphoneProps} />}
