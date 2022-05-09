@@ -1,5 +1,5 @@
 import { CallState } from '@azure/communication-calling';
-import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCallClient, CallClientState } from '@azure/communication-react';
+import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCallClient, CallClientState, ParticipantList } from '@azure/communication-react';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { useCallback, useState } from 'react';
 import { AddParticipantField } from './Components/AddParticipantField';
@@ -19,6 +19,7 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
   const microphoneProps = usePropsFor(MicrophoneButton);
   const screenShareProps = usePropsFor(ScreenShareButton);
   const endCallProps = usePropsFor(EndCallButton);
+  const participantListProps = usePropsFor(ParticipantList);
   const callClient = useCallClient();
   
 
@@ -72,6 +73,9 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
         {callState.calls[props.callId].state === ("LocalHold" || "RemoteHold") && <CallHold />}
         <Stack style={{ width: '12rem', marginLeft: 'auto', marginRight: 'auto' }}>
           <AddParticipantField onAddParticipant={props.onAddParticipant} caller={props.caller}></AddParticipantField>
+        </Stack>
+        <Stack>
+          <ParticipantList {...participantListProps} />
         </Stack>
       </div>
       <ControlBar layout='floatingBottom'>

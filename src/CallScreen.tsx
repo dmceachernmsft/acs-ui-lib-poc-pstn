@@ -5,8 +5,6 @@ import CallingComponents from './CallingComponents';
 import { registerIcons } from '@fluentui/react';
 import { Call, CallAgent } from '@azure/communication-calling';
 import { CirclePauseIcon, CirclePauseSolidIcon } from '@fluentui/react-icons-mdl2'
-
-
 export interface CallScreenProps {
     userToken: string,
     userId: string,
@@ -53,8 +51,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             console.log(`CallId ${call?.id}`);
         }
     }, [callAgent, calleeNumber, callerNumber])
-
-    console.log(call?.state);
 
     /**
      * Something like this should be in the handlers like how screen share and end call buttons are. 
