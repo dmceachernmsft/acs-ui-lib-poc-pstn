@@ -1,3 +1,4 @@
+import { CallState } from '@azure/communication-calling';
 import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCallClient } from '@azure/communication-react';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { useCallback, useEffect, useState } from 'react';
@@ -19,11 +20,15 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
   const screenShareProps = usePropsFor(ScreenShareButton);
   const endCallProps = usePropsFor(EndCallButton);
   const callClient = useCallClient();
-  const callState = callClient.getState();
+  const callClientState = callClient.getState();
 
   const [callEnded, setCallEnded] = useState(false);
-  const [callOnHold, setCallOnHold] = useState(false);
-
+  const [callState, setCallState] = useState<CallState>();
+  
+  callClient.onStateChange(() => {
+    setCallState(callClientState.calls[props.callId].state);
+  })
+  
   const onHangup = useCallback(async (): Promise<void> => {
     await endCallProps.onHangUp();
     setCallEnded(true);
@@ -33,28 +38,18 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
     await props.onToggleHold();
   }, [props.onToggleHold])
 
-  useEffect(() => {
-    if (callState.calls[props.callId].state === ("LocalHold" || "RemoteHold")) {
-      setCallOnHold(true);
-    } else {
-      setCallOnHold(false);
-    }
-  }, [callState.calls, props.callId]);
-
-  // console.log(callState.calls[props.callId].callerInfo);
-
   if (callEnded) {
     return (
       <CallEnded />);
   }
 
-  if (callState.calls[props.callId].state === "Connecting") {
+  if (callState === "Connecting") {
     return (
       <h1>Performing setup</h1>
     )
   }
 
-  if (callState.calls[props.callId].state === "Ringing") {
+  if (callState === "Ringing") {
     return (
       <Stack>
         <CallRinging />
@@ -68,8 +63,8 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
   return (
     <Stack className={mergeStyles({ height: '100%' })}>
       <div style={{ width: '100vw', height: '100vh' }}>
-        {videoGalleryProps && !callOnHold && <VideoGallery {...videoGalleryProps} />}
-        {callOnHold && <CallHold />}
+        {videoGalleryProps && callState === 'Connected' && <VideoGallery {...videoGalleryProps} />}
+        {callState === ("LocalHold" || "RemoteHold") && <CallHold />}
         <Stack style={{ width: '12rem', marginLeft: 'auto', marginRight: 'auto' }}>
           <AddParticipantField onAddParticipant={props.onAddParticipant} caller={props.caller}></AddParticipantField>
         </Stack>
