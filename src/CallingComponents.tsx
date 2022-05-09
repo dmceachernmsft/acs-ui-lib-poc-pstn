@@ -1,7 +1,7 @@
 import { CallState } from '@azure/communication-calling';
 import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCallClient } from '@azure/communication-react';
 import { mergeStyles, Stack } from '@fluentui/react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { AddParticipantField } from './Components/AddParticipantField';
 import { HoldButton } from './Components/HoldButton';
 
