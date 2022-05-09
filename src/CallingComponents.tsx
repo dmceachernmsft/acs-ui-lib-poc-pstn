@@ -1,5 +1,5 @@
 import { CallState } from '@azure/communication-calling';
-import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCallClient } from '@azure/communication-react';
+import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCallClient, CallClientState } from '@azure/communication-react';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { useCallback, useState } from 'react';
 import { AddParticipantField } from './Components/AddParticipantField';
@@ -20,13 +20,18 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
   const screenShareProps = usePropsFor(ScreenShareButton);
   const endCallProps = usePropsFor(EndCallButton);
   const callClient = useCallClient();
-  const callClientState = callClient.getState();
+  
 
   const [callEnded, setCallEnded] = useState(false);
-  const [callState, setCallState] = useState<CallState>();
+  const [callState, setCallState] = useState<CallClientState>(callClient.getState);
   
-  callClient.onStateChange(() => {
-    setCallState(callClientState.calls[props.callId].state);
+  callClient.onStateChange((state: CallClientState) => {
+    if(state.callsEnded[props.callId]){
+      setCallEnded(true);
+      return;
+    }
+    console.log(state.calls[props.callId].state);
+    setCallState(state);
   })
   
   const onHangup = useCallback(async (): Promise<void> => {
@@ -43,13 +48,13 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
       <CallEnded />);
   }
 
-  if (callState === "Connecting") {
+  if (callState.calls[props.callId].state === "Connecting") {
     return (
       <h1>Performing setup</h1>
     )
   }
 
-  if (callState === "Ringing") {
+  if (callState.calls[props.callId].state === "Ringing") {
     return (
       <Stack>
         <CallRinging />
@@ -63,8 +68,8 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
   return (
     <Stack className={mergeStyles({ height: '100%' })}>
       <div style={{ width: '100vw', height: '100vh' }}>
-        {videoGalleryProps && callState === 'Connected' && <VideoGallery {...videoGalleryProps} />}
-        {callState === ("LocalHold" || "RemoteHold") && <CallHold />}
+        {videoGalleryProps && callState.calls[props.callId].state === 'Connected' && <VideoGallery {...videoGalleryProps} />}
+        {callState.calls[props.callId].state === ("LocalHold" || "RemoteHold") && <CallHold />}
         <Stack style={{ width: '12rem', marginLeft: 'auto', marginRight: 'auto' }}>
           <AddParticipantField onAddParticipant={props.onAddParticipant} caller={props.caller}></AddParticipantField>
         </Stack>
@@ -81,7 +86,7 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
 }
 
 function CallEnded(): JSX.Element {
-  return <h1>You ended the call.</h1>;
+  return <h1>The call has ended.</h1>;
 }
 
 function CallHold(): JSX.Element {
