@@ -90,7 +90,8 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
   console.log(participantListProps.participants);
   participantListProps.participants.forEach((p) => {
     p.displayName = p.userId;
-  })
+  });
+  
   return (
     <Stack>
       <Stack>
