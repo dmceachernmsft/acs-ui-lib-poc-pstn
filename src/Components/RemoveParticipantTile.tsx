@@ -15,12 +15,10 @@ export type RemoveParticipantTileProps = {
  */
 export const RemoveParticipantTile = (props: RemoveParticipantTileProps): JSX.Element => {
     const {remoteParticipant} = props;
-    const participantState = remoteParticipant.state;
-    const identifier = toFlatCommunicationIdentifier(remoteParticipant.identifier);
     return (
       <Stack>
-        <h2>{participantState}</h2>
-        <h2>{identifier}</h2>
+        <h2>{remoteParticipant.state}</h2>
+        <h2>{toFlatCommunicationIdentifier(remoteParticipant.identifier)}</h2>
         <ControlBar>
           <EndCallButton onHangUp={() => props.onRemoveParticipant(remoteParticipant.identifier)}></EndCallButton>
         </ControlBar>

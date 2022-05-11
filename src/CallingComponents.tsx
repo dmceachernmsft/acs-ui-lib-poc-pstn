@@ -72,35 +72,37 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
   }
 
   let removeParticipantTiles: JSX.Element[] = [];
-  
+
   videoGalleryProps.remoteParticipants.forEach((p) => {
     let participant: RemoteParticipantState;
     participant = callState.calls[props.callId].remoteParticipants[p.userId];
-    removeParticipantTiles.push((<RemoveParticipantTile remoteParticipant={participant} onRemoveParticipant={props.onRemoveParticipant}/>))
+    removeParticipantTiles.push((<RemoveParticipantTile remoteParticipant={participant} onRemoveParticipant={props.onRemoveParticipant} />))
   });
 
   return (
-    <Stack className={mergeStyles({ height: '100%' })}>
+    <Stack>
       <Stack>
-        <div style={{ width: '100vw' }}>
-          {videoGalleryProps && callState.calls[props.callId].state === 'Connected' && <VideoGallery {...videoGalleryProps}/>}
-          {callState.calls[props.callId].state === ("LocalHold" || "RemoteHold") && <CallHold />}
-          <Stack style={{ width: '12rem', marginLeft: 'auto', marginRight: 'auto' }}>
-            <AddParticipantField onAddParticipant={props.onAddParticipant} caller={props.caller}></AddParticipantField>
+        <Stack style={{ width: '12rem', marginLeft: 'auto', marginRight: 'auto', marginTop: '3rem' }}>
+          <AddParticipantField onAddParticipant={props.onAddParticipant} caller={props.caller}></AddParticipantField>
+        </Stack>
+        <div>
+          <Stack style={{ width: 'auto', height: '60rem' }}>
+            {videoGalleryProps && callState.calls[props.callId].state === 'Connected' && (<VideoGallery {...videoGalleryProps} />)}
+            {callState.calls[props.callId].state === ("LocalHold" || "RemoteHold") && <CallHold />}
+            <ControlBar layout='floatingBottom'>
+              {cameraProps && <CameraButton  {...cameraProps} />}
+              {microphoneProps && <MicrophoneButton   {...microphoneProps} />}
+              {screenShareProps && <ScreenShareButton  {...screenShareProps} />}
+              {onToggleHold && <HoldButton onToggleHold={onToggleHold} />}
+              {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
+            </ControlBar>
+            <GridLayout styles={{root: {padding: '3rem'}}}>
+              {removeParticipantTiles}
+            </GridLayout>
           </Stack>
+
+
         </div>
-        <ControlBar layout='floatingBottom'>
-          {cameraProps && <CameraButton  {...cameraProps} />}
-          {microphoneProps && <MicrophoneButton   {...microphoneProps} />}
-          {screenShareProps && <ScreenShareButton  {...screenShareProps} />}
-          {onToggleHold && <HoldButton onToggleHold={onToggleHold} />}
-          {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
-        </ControlBar>
-      </Stack>
-      <Stack>
-        <GridLayout>
-          {removeParticipantTiles}
-        </GridLayout>
       </Stack>
     </Stack>
   );
