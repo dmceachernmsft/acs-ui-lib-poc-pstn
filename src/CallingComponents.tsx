@@ -71,8 +71,18 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
     );
   }
 
+  // Array of participant tiles that are used to remove a participant and display their call state
   let removeParticipantTiles: JSX.Element[] = [];
 
+  /** 
+   * Using the video gallery participants we can map to the remote participants in the client
+   * 
+   * This highlights something thats missing with the VideoGalleryParticipant type that the other pieces of the remote participant object
+   * are missing. To fix this we should edit the type and selector to include the missing information like type, this is useful
+   * because if we make this happen we can leverage the VideoGallery's onRenderRemoteTile prop to inject a custom PSTN video tile into
+   * the Video gallery for PSTN calls.
+   * - this would allow Contoso to have their own cutom PSTN operations in the tile as well. 
+  */
   videoGalleryProps.remoteParticipants.forEach((p) => {
     let participant: RemoteParticipantState;
     participant = callState.calls[props.callId].remoteParticipants[p.userId];
