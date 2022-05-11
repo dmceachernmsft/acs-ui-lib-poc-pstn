@@ -1,6 +1,6 @@
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, MicrosoftTeamsUserIdentifier, UnknownIdentifier } from '@azure/communication-chat/node_modules/@azure/communication-signaling';
-import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCallClient, CallClientState, ParticipantList, RemoteParticipantState, GridLayout } from '@azure/communication-react';
-import { mergeStyles, Stack } from '@fluentui/react';
+import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCallClient, CallClientState, RemoteParticipantState, GridLayout } from '@azure/communication-react';
+import { Stack } from '@fluentui/react';
 import { useCallback, useState } from 'react';
 import { AddParticipantField } from './Components/AddParticipantField';
 import { HoldButton } from './Components/HoldButton';
