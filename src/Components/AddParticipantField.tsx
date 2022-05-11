@@ -26,7 +26,6 @@ export const AddParticipantField = (props: AddParticipantFieldProps): JSX.Elemen
             <TextField onChange={setText}>
             </TextField><IconButton onRenderIcon={() => <AddPhoneIcon />} onClick={() => {
                 if (participant && caller) {
-                    console.log('calling: ' + participant);
                     onAddParticipant(participant, caller);
                 }
             }}></IconButton>
