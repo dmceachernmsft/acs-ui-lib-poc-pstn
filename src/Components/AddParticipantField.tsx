@@ -1,6 +1,7 @@
 import { TextField, IconButton, Stack } from '@fluentui/react'
 import { useState } from "react";
 import { AddPhoneIcon } from '@fluentui/react-icons-mdl2';
+
 export type AddParticipantFieldProps = {
     onAddParticipant: (participant: string, caller: string) => Promise<void>;
     caller: string;
