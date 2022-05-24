@@ -1,5 +1,5 @@
 import { ControlBar, EndCallButton, toFlatCommunicationIdentifier, RemoteParticipantState } from "@azure/communication-react";
-import { CommunicationUserIdentifier, PhoneNumberIdentifier, MicrosoftTeamsUserIdentifier, UnknownIdentifier } from '@azure/communication-chat/node_modules/@azure/communication-signaling';
+import { CommunicationUserIdentifier, PhoneNumberIdentifier, MicrosoftTeamsUserIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import {Stack} from '@fluentui/react'
 
 export type RemoveParticipantTileProps = {

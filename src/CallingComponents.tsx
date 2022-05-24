@@ -1,9 +1,8 @@
-import { CommunicationUserIdentifier, PhoneNumberIdentifier, MicrosoftTeamsUserIdentifier, UnknownIdentifier } from '@azure/communication-chat/node_modules/@azure/communication-signaling';
-import { usePropsFor, VideoGallery, ControlBar, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCallClient, CallClientState, RemoteParticipantState, GridLayout, ParticipantList } from '@azure/communication-react';
+import { CommunicationUserIdentifier, PhoneNumberIdentifier, MicrosoftTeamsUserIdentifier, UnknownIdentifier } from '@azure/communication-common';
+import { usePropsFor, VideoGallery, ControlBar, HoldButton, CameraButton, MicrophoneButton, ScreenShareButton, EndCallButton, useCallClient, CallClientState, RemoteParticipantState, GridLayout, ParticipantList } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { useCallback, useState } from 'react';
 import { AddParticipantField } from './Components/AddParticipantField';
-import { HoldButton } from './Components/HoldButton';
 import { RemoveParticipantTile } from './Components/RemoveParticipantTile';
 
 export type CallingComponentsProps = {
@@ -23,9 +22,10 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
   const screenShareProps = usePropsFor(ScreenShareButton);
   const endCallProps = usePropsFor(EndCallButton);
   const participantListProps = usePropsFor(ParticipantList);
+  const holdButtonProps = usePropsFor(HoldButton);
 
   const callClient = useCallClient();
-
+  
   const [callEnded, setCallEnded] = useState(false);
   const [callState, setCallState] = useState<CallClientState>(callClient.getState);
 
@@ -41,11 +41,6 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
     await endCallProps.onHangUp();
     setCallEnded(true);
   }, [endCallProps.onHangUp]);
-
-  const onToggleHold = useCallback(async (): Promise<void> => {
-    await props.onToggleHold();
-  }, [props.onToggleHold]);
-
 
   if (callEnded) {
     return (
@@ -87,7 +82,7 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
     removeParticipantTiles.push((<RemoveParticipantTile remoteParticipant={participant} onRemoveParticipant={props.onRemoveParticipant} />))
   });
 
-  console.log(participantListProps.participants);
+  console.log(callClient.getState().calls[props.callId].state);
   participantListProps.participants.forEach((p) => {
     p.displayName = p.userId;
   });
@@ -106,7 +101,7 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
               {cameraProps && <CameraButton  {...cameraProps} />}
               {microphoneProps && <MicrophoneButton   {...microphoneProps} />}
               {screenShareProps && <ScreenShareButton  {...screenShareProps} />}
-              {onToggleHold && <HoldButton onToggleHold={onToggleHold} />}
+              {holdButtonProps && <HoldButton {...holdButtonProps} />}
               {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
             </ControlBar>
             <ParticipantList {...participantListProps}/>

@@ -5,7 +5,7 @@ import CallingComponents from './CallingComponents';
 import { registerIcons } from '@fluentui/react';
 import { Call, CallAgent } from '@azure/communication-calling';
 import { CirclePauseIcon, CirclePauseSolidIcon } from '@fluentui/react-icons-mdl2'
-import { CommunicationUserIdentifier, MicrosoftTeamsUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-chat/node_modules/@azure/communication-signaling';
+import { CommunicationUserIdentifier, MicrosoftTeamsUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 export interface CallScreenProps {
     userToken: string,
     userId: string,
