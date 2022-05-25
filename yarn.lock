@@ -78,9 +78,9 @@
     jwt-decode "~2.2.0"
     tslib "^2.2.0"
 
-"@azure/communication-react@.\\deps\\azure-communication-react-1.2.2-beta.1.pstn-holdbutton2.tgz":
+"@azure/communication-react@.\\deps\\azure-communication-react-1.2.2-beta.1.pstn-holdbutton3.tgz":
   version "1.2.2-beta.1"
-  resolved ".\\deps\\azure-communication-react-1.2.2-beta.1.pstn-holdbutton2.tgz#f48553b7bf27f7c808b59e4fcbff8559034041a7"
+  resolved ".\\deps\\azure-communication-react-1.2.2-beta.1.pstn-holdbutton3.tgz#b96ef0c78bf0c5f0cfbdf2a58ad7a6568df6a27d"
   dependencies:
     "@azure/communication-common" "2.0.0"
     "@azure/communication-signaling" "1.0.0-beta.13"

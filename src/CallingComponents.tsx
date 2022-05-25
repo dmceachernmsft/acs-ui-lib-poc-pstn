@@ -37,6 +37,8 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
     setCallState(state);
   });
 
+  console.log(callClient.getState().calls[props.callId].state);
+
   const onHangup = useCallback(async (): Promise<void> => {
     await endCallProps.onHangUp();
     setCallEnded(true);
