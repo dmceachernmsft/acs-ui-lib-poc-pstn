@@ -43,7 +43,13 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
 
   if (call?.state === "Connecting") {
     return (
-      <h1>Performing setup</h1>
+      <h1>Performing setup...</h1>
+    )
+  }
+
+  if(call?.state === 'Disconnecting'){
+    return (
+      <h1>Ending the call...</h1>
     )
   }
 
@@ -64,25 +70,24 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
         <Stack style={{ width: '12rem', marginLeft: 'auto', marginRight: 'auto', marginTop: '3rem' }}>
           <AddParticipantField onAddParticipant={call?.addParticipant} caller={props.caller}></AddParticipantField>
         </Stack>
-        <div>
-          <Stack horizontal style={{ width: '60rem', height: '60rem', margin: 'auto' }}>
+        <Stack horizontal style={{ width: '60rem', height: '60rem', margin: 'auto' }}>
+          <Stack style={{ width: '60rem' }}>
             {videoGalleryProps && call?.state === 'Connected' && (<VideoGallery {...videoGalleryProps} />)}
             {callState.calls[props.callId].state === ("LocalHold" || "RemoteHold") && <CallHold />}
             <Stack>
-              <h3 style={{padding: '0.5rem, 2rem'}}>In this call</h3>
-              <ParticipantList {...participantListProps} />
+              <ControlBar layout='floatingBottom'>
+                {cameraProps && <CameraButton  {...cameraProps} />}
+                {microphoneProps && <MicrophoneButton   {...microphoneProps} />}
+                {holdButtonProps && <HoldButton {...holdButtonProps} />}
+                {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
+              </ControlBar>
             </Stack>
-
           </Stack>
-          <Stack style={{ height: '17%' }}>
-            <ControlBar layout='floatingBottom'>
-              {cameraProps && <CameraButton  {...cameraProps} />}
-              {microphoneProps && <MicrophoneButton   {...microphoneProps} />}
-              {holdButtonProps && <HoldButton {...holdButtonProps} />}
-              {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
-            </ControlBar>
+          <Stack>
+            <h3 style={{ padding: '0.5rem' }}>In this call</h3>
+            <ParticipantList {...participantListProps} />
           </Stack>
-        </div>
+        </Stack>
       </Stack>
     </Stack>
   );
