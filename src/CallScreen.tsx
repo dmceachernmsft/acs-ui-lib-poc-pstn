@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import CallingComponents from './CallingComponents';
 import { registerIcons } from '@fluentui/react';
 import { Call, CallAgent } from '@azure/communication-calling';
-import { CirclePauseIcon, CirclePauseSolidIcon } from '@fluentui/react-icons-mdl2'
-import { CommunicationUserIdentifier, MicrosoftTeamsUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 export interface CallScreenProps {
     userToken: string,
     userId: string,
@@ -21,7 +19,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     const [call, setCall] = useState<Call>();
     const [callFailed, setCallFailed] = useState<boolean>(false);
 
-    registerIcons({ icons: { ...DEFAULT_COMPONENT_ICONS, CirclePauseIcon: <CirclePauseIcon />, CirclePauseSolidIcon: <CirclePauseSolidIcon /> } });
+    registerIcons({ icons: { ...DEFAULT_COMPONENT_ICONS } });
 
     /**
      * Something we should look into is the kind of id's that we accept to make
