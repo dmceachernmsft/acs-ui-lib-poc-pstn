@@ -1,4 +1,4 @@
-import { usePropsFor, VideoGallery, ControlBar, CameraButton, HoldButton, MicrophoneButton, EndCallButton, useCallClient, CallClientState, ParticipantList, useCall } from '@azure/communication-react';
+import { usePropsFor, VideoGallery, ControlBar, CameraButton, HoldButton, MicrophoneButton, EndCallButton, useCallClient, CallClientState, ParticipantList, useCall, Dialpad } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { useCallback, useState } from 'react';
 import { AddParticipantField } from './Components/AddParticipantField';
@@ -47,7 +47,7 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
     )
   }
 
-  if(call?.state === 'Disconnecting'){
+  if (call?.state === 'Disconnecting') {
     return (
       <h1>Ending the call...</h1>
     )
@@ -67,9 +67,7 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
   return (
     <Stack>
       <Stack>
-        <Stack style={{ width: '12rem', marginLeft: 'auto', marginRight: 'auto', marginTop: '3rem' }}>
-          <AddParticipantField onAddParticipant={call?.addParticipant} caller={props.caller}></AddParticipantField>
-        </Stack>
+
         <Stack horizontal style={{ width: '60rem', height: '60rem', margin: 'auto' }}>
           <Stack style={{ width: '60rem' }}>
             {videoGalleryProps && call?.state === 'Connected' && (<VideoGallery {...videoGalleryProps} />)}
@@ -86,6 +84,9 @@ function CallingComponents(props: CallingComponentsProps): JSX.Element {
           <Stack>
             <h3 style={{ padding: '0.5rem' }}>In this call</h3>
             <ParticipantList {...participantListProps} />
+            <Stack style={{ width: '12rem', marginLeft: 'auto', marginRight: 'auto', marginTop: '3rem' }}>
+              <AddParticipantField onAddParticipant={call?.addParticipant} caller={props.caller}></AddParticipantField>
+            </Stack>
           </Stack>
         </Stack>
       </Stack>

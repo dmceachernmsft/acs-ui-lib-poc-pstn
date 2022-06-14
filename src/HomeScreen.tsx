@@ -1,3 +1,4 @@
+import { Dialpad } from '@azure/communication-react';
 import { Stack, Text, TextField, PrimaryButton, IStackStyles } from '@fluentui/react';
 import { useState } from 'react';
 
@@ -12,13 +13,18 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     const [userToken, setUserToken] = useState<string>();
     const [userId, setUserId] = useState<string>();
 
+    const onChange = (input: string): void => {
+        setCalleeNumber(`+${input.split(' ').join('').replace('(','').replace(')', '').replace('-','')}`);
+    }
+
     return (<Stack styles={homeScreenContainerStyles}>
         <Text role={'heading'}>ACS UI PSTN Sample</Text>
         <Stack>
-            <TextField
+            <Dialpad onChange={onChange}/>
+            {/* <TextField
                 styles={textFieldStyles}
                 placeholder='Enter the number of who you want to call'
-                onChange={(_, newValue) => newValue && setCalleeNumber(newValue)} />
+                onChange={(_, newValue) => newValue && setCalleeNumber(newValue)} /> */}
             <TextField
                 styles={textFieldStyles}
                 placeholder='Enter your ACS Phone number'
